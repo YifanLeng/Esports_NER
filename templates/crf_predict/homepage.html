@@ -13,7 +13,12 @@
   </head>
   <body>
   <div>
-      <p>Select one of the test documents to tag</p>
+      <form method="POST" class="form-wrapper">
+            {% csrf_token %}
+            <input type="text" name="url" id="search" placeholder="Search for..." required>
+            <input type="submit" value="go" id="submit">
+      </form>
+      <p>Or select one of the test documents to tag</p>
   </div>
   <div class="w3-row w3-center w3-small">
 

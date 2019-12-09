@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from nltk.corpus import wordnet
 from pymagnitude import Magnitude
 
-from utils import (
+from .utils import (
     UPPERCASE_RE,
     LOWERCASE_RE,
     DIGIT_RE,
@@ -249,3 +249,4 @@ class WindowedTokenFeatureExtractor:
                     )
             features.append(current_feature)
         return features
+

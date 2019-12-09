@@ -21,8 +21,10 @@ def retrieve_test_docs_from_url(url):
     test_docs = []
     paragraphs = soup.findAll('p')
     for p in paragraphs:
+        text = p.text
+        if "#" in text or "http" in text:
+            continue
         doc = NLP(p.text)
-        #print(doc)
         test_docs.append(doc)
     return test_docs
 

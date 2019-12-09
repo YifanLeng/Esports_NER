@@ -1,11 +1,11 @@
 from spacy.tokens import Doc, Span, Token
-from feature_extractors import WindowedTokenFeatureExtractor
+from .feature_extractors import WindowedTokenFeatureExtractor
 from abc import ABC, abstractmethod
 from typing import Mapping, Sequence, Dict, Optional, List, Iterable
 
 from pycrfsuite import Trainer, Tagger
 
-from utils import decode_bilou
+from .utils import decode_bilou
 
 class EntityEncoder(ABC):
     @abstractmethod
