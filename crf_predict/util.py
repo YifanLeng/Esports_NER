@@ -126,21 +126,29 @@ def entity_linking(entity_name, entity_label, kb):
 
 def display_json(html, json):
     soup = BeautifulSoup(html, 'html.parser')
-    li_tag = soup.new_tag('li')
+    ul_tag = soup.new_tag('ul')
     #soup.body.insert(0, li_tag)
     for key, value in json.items():
-        ul_tag = soup.new_tag('ul')
+        li_tag = soup.new_tag('li')
         if str(value).startswith("http"):
             a_tag = soup.new_tag('a', href=value)
             a_tag.insert(1, str(value))
-            ul_tag.insert(1, a_tag)
+            li_tag.insert(1, a_tag)
         else:
-            ul_tag.insert(1, str(key) + ":" + str(value))
-        li_tag.append(ul_tag)
+            li_tag.insert(1, str(key) + ":" + str(value))
+        ul_tag.append(li_tag)
     br_tag = soup.new_tag('br')
-    li_tag.append(br_tag)
-
-    soup.body.insert(0, li_tag)
+    ul_tag.append(br_tag)
+    
+    # entity linking header
+    linking_header = soup.new_tag('h1')
+    linking_header.string = "Entity's Linking In Liquipedia"
+    soup.body.insert(0, linking_header)
+    soup.body.insert(1, ul_tag)
+    # entity occurrences header
+    tagging_header = soup.new_tag('h1')
+    tagging_header.string = "Entity's Occurrences In Training Corpus"
+    soup.body.insert(2, tagging_header)
     html = soup.prettify()
     html_file = open(os.path.join(TEMPLATE_DIR, "linking.html"), 'w')
     html_file.write(html)
