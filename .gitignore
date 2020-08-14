@@ -1,1 +1,2 @@
 static/admin/*
+templates/crf_predict/linking.html
