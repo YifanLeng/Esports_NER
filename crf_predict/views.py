@@ -8,6 +8,8 @@ from crf_predict.models import Doc, Ent, TestDoc
 import random
 from Entity_Linking import Dota2_Knowledge_Base
 import os
+import spacy
+NLP = spacy.load("en_core_web_sm", disable=["ner"])
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR,  "Entity_Linking")
@@ -41,10 +43,22 @@ for pk in pks:
 test_docs = []
 # Create your views here.
 def index(request):
-
+    """
     if request.method == 'POST':
         print(request.POST.get('url'))
         test_docs = retrieve_test_docs_from_url(request.POST.get('url'))
+        entity_dict, test_docs = predict_ents(test_docs)
+        html = displacy.render(test_docs, style="ent", options={'colors': colors}, page=True)
+        add_href_to_entities(html)
+    """
+    if request.method == 'POST':
+        if "http" in request.POST.get('url'):
+            test_docs = retrieve_test_docs_from_url(request.POST.get('url'))
+        else:
+            text = request.POST.get('url')
+            doc = NLP(text)
+            test_docs = [doc]
+
         entity_dict, test_docs = predict_ents(test_docs)
         html = displacy.render(test_docs, style="ent", options={'colors': colors}, page=True)
         add_href_to_entities(html)

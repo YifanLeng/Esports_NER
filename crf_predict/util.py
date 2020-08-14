@@ -4,6 +4,8 @@ import spacy
 from spacy.tokens import Span
 import os
 import json
+import string
+translator = str.maketrans('', '', string.punctuation)
 
 NLP = spacy.load("en_core_web_sm", disable=["ner"])
 CUR_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,6 +46,7 @@ def add_href_to_entities(html):
 
     for mark_tag in soup.find_all('mark'):
         ent_name = mark_tag.contents[0].strip()
+        ent_name = ent_name.translate(translator)
         ent_label = mark_tag.contents[1].string
         url_tag = "{% url \'linking\' entity=" + \
                   "\'" + ent_name + "&" + ent_label + \

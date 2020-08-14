@@ -1,7 +1,7 @@
 from typing import Sequence, Dict, List, Optional
 from abc import ABC, abstractmethod
 
-from nltk.corpus import wordnet
+# from nltk.corpus import wordnet
 from pymagnitude import Magnitude
 
 from .utils import (
@@ -120,6 +120,7 @@ class WordShapeFeature(FeatureExtractor):
         shape_str = DIGIT_RE.sub("0", shape_str)
         features["shape[%d]=%s" % (relative_idx, shape_str)] = 1.0
 
+"""
 class LikelyAdjectiveFeature(FeatureExtractor):
     def extract(
         self,
@@ -163,6 +164,7 @@ class PosFeature(FeatureExtractor):
         for synset in wordnet.synsets(token):
             if synset.name().split('.')[0] == token:
                 features[f"adj[{relative_idx}]={synset.pos()}"] = 1.0
+"""
 
 class WordVectorFeature(FeatureExtractor):
     def __init__(self, vectors_path: str, scaling: float = 1.0) -> None:
